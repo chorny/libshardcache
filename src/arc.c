@@ -43,7 +43,7 @@ typedef struct __arc_list {
 #pragma pack(push, 1)
 typedef struct __arc_state {
     arc_list_t head;
-    size_t size; // note must be accessed only via atomic functions
+    uint64_t size; // note must be accessed only via atomic functions
     uint64_t count; // note must be accessed only via atomic functions
 } arc_state_t;
 #pragma pack(pop)
@@ -378,7 +378,7 @@ terminate_node_callback(refcnt_node_t *node, void *priv)
 
 /* Create a new cache. */
 arc_t *
-arc_create(arc_ops_t *ops, size_t c, size_t cached_object_size, size_t *lists_size[4])
+arc_create(arc_ops_t *ops, size_t c, size_t cached_object_size, uint64_t *lists_size[4])
 {
     arc_t *cache = calloc(1, sizeof(arc_t));
 
